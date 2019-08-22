@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const UpdateMovie = props => {
+    console.log(props)
     const initialState = {
+        id: 0,
         title: '',
         director: '',
         metascore: '',
@@ -17,7 +19,7 @@ const UpdateMovie = props => {
     }, [props.movies, props.match.params.id]);
 
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         axios
             .put(`http://localhost:5000/api/movies/${movie.id}`, movie)
@@ -42,9 +44,9 @@ const UpdateMovie = props => {
         });
     };
 
-    const starChangeHandler = (ind, e) => {
+    const starChangeHandler = (idx, e) => {
         const newStars = [...movie.stars];
-        newStars[ind] = e.target.value;
+        newStars[idx] = e.target.value;
         setMovie({...movie, stars: newStars})
     }
     return (
@@ -76,12 +78,14 @@ const UpdateMovie = props => {
                     value={movie.metascore}
                 /><br />
                 <label>Stars:</label><br />
-                <input
-                    type="text"
-                    name="stars"
-                    onChange={e => starChangeHandler(ind, e)}
-                    placeholder="Stars..."
-                    value={movie.stars[ind]} /><br />
+                {movie.stars.map((star, idx) => {
+                    return ( <> <input
+                        key={star}
+                        type='text'
+                        name='star'
+                        onChange={e => starChangeHandler(idx, e)}
+                        placeholder="Star..."
+                        value={movie.stars[idx]} /> <br /> </>) })}
                 <button>Update!</button>
             </form>
         </>

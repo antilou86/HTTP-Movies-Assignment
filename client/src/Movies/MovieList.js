@@ -15,18 +15,22 @@ export default class MovieList extends Component {
   componentDidMount() {
     axios
       .get("http://localhost:5000/api/movies")
-      .then(res => this.setState({ movies: res.data }))
+      .then(res => {
+        this.setState({ movies: res.data });
+        this.props.sendMovies(this.state.movies);
+      })
       .catch(err => console.log(err.response));
   }
-  updateMovies = () => {
+  updateMovies = (e, newData) => {
     e.preventDefault();
-    this.setState({movies: res.data})
+    this.setState({movies: newData})
+    this.props.sendMovies(this.state.movies);
   }
 
   render() {
     return (
       <div className="movie-list">
-        {this.state.movies.map(movie => (
+        {this.state.movies && this.state.movies.map(movie => (
           <MovieDetails key={movie.id} movie={movie} updateMovies={this.updateMovies}/>
         ))}
       </div>

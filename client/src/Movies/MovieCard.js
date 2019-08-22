@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios";
 
 const MovieCard = props => {
   const { title, director, metascore, stars, id } = props.movie;
@@ -8,7 +9,7 @@ const MovieCard = props => {
     axios
       .delete(`http://localhost:5000/api/movies/${id}`)
       .then(res => {
-        props.updateMovies(res.data)
+        props.updateMovies(e, res.data)
         props.history.push('/');
       })
       .catch(err => console.log(err.response));
