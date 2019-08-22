@@ -4,7 +4,7 @@ import axios from "axios";
 const UpdateMovie = props => {
     console.log(props)
     const initialState = {
-        id: 0,
+        id: '',
         title: '',
         director: '',
         metascore: '',
@@ -25,11 +25,15 @@ const UpdateMovie = props => {
             .put(`http://localhost:5000/api/movies/${movie.id}`, movie)
             .then(res => {
                 console.log(res);
+                console.log(props);
                 setMovie(initialState);
                 props.updateItems(res.data);
-                props.history.push(`/movies`);
+                props.history.push('/');
             })
-            .catch(err => console.log(err.response));
+            .catch(err => {
+                console.log(err.response)
+                props.history.push('/');
+            })
     }
 
     const changeHandler = (ev) => {
@@ -80,7 +84,7 @@ const UpdateMovie = props => {
                 <label>Stars:</label><br />
                 {movie.stars.map((star, idx) => {
                     return ( <> <input
-                        key={star}
+                        key={idx}
                         type='text'
                         name='star'
                         onChange={e => starChangeHandler(idx, e)}
