@@ -8,7 +8,7 @@ export default class MovieList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies: []
+      movies: null
     };
   }
 
@@ -25,6 +25,7 @@ export default class MovieList extends Component {
     e.preventDefault();
     this.setState({movies: newData})
     this.props.sendMovies(this.state.movies);
+    this.props.history.push('/');
   }
 
   render() {
@@ -38,10 +39,10 @@ export default class MovieList extends Component {
   }
 }
 
-function MovieDetails({ movie, updateMovies }) {
+function MovieDetails({ movie, updateMovies, props}) {
   return (
     <Link to={`/movies/${movie.id}`}>
-      <MovieCard movie={movie} updateMovies={updateMovies}/>
+      <MovieCard movie={movie} updateMovies={updateMovies} props={props}/>
     </Link>
   );
 }
