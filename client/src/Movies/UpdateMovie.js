@@ -2,15 +2,20 @@ import React, {useState} from "react";
 import axios from "axios";
 
 const UpdateMovie = props => {
-
     const initialState = {
         title: '',
         director: '',
         metascore: '',
         stars: []
     }
-
     const [movie, setMovie] = useState(initialState)
+
+    useEffect(() => {
+        const id = props.match.params.id;
+        const movieInArr = props.movies.find(mov => `${mov.id}` === id);
+        if (movieInArr) setMovie(movieInArr);
+      }, [props.movies, props.match.params.id]);
+    
 
     const handleSubmit = () => {
         e.preventDefault();
