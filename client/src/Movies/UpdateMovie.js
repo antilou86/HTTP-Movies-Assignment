@@ -27,7 +27,7 @@ const UpdateMovie = props => {
                 console.log(res);
                 setMovie(initialState);
                 props.updateItems(res.data);
-                props.history.push('/');
+                props.history.push(`/movies`);
             })
             .catch(err => console.log(err.response));
     }
