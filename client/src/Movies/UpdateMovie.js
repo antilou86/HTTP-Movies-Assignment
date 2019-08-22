@@ -2,13 +2,15 @@ import React, {useState} from "react";
 import axios from "axios";
 
 const UpdateMovie = props => {
-    const [movie, setMovie] = useState({
-        id: '',
+
+    const initialState = {
         title: '',
-        dirdirector: '',
+        director: '',
         metascore: '',
         stars: []
-    })
+    }
+
+    const [movie, setMovie] = useState(initialState)
 
     const handleSubmit = () => {
         e.preventDefault();
@@ -16,7 +18,7 @@ const UpdateMovie = props => {
       .put(`http://localhost:5000/api/movies/${movie.id}`, movie)
       .then(res => {
         console.log(res);
-        setItem();
+        setMovie(initialState);
         props.updateItems(res.data);
         props.history.push('/');
       })
@@ -57,7 +59,7 @@ return (
             /><br />
             <label>Metascore:</label><br />
             <input
-                type="text"
+                type="number"
                 name="metascore"
                 onChange={changeHandler}
                 placeholder="Metascore..."
